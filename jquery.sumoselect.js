@@ -25,26 +25,25 @@
 
         // This is the easiest way to have default options.
         var settings = $.extend({
-            placeholder: 'Select Here',   // Dont change it here.
+            placeholder: 'Maak een selectie',   // Dont change it here.
             csvDispCount: 3,              // display no. of items in multiselect. 0 to display all.
-            captionFormat:'{0} Selected', // format of caption text. you can set your locale.
-            captionFormatAllSelected:'{0} all selected!', // format of caption text when all elements are selected. set null to use captionFormat. It will not work if there are disabled elements in select.
+            captionFormat: '{0} geselecteerd', // format of caption text. you can set your locale.
+            captionFormatAllSelected: '{0} alles geselecteerd!', // format of caption text when all elements are selected. set null to use captionFormat. It will not work if there are disabled elements in select.
             floatWidth: 400,              // Screen width of device at which the list is rendered in floating popup fashion.
             forceCustomRendering: false,  // force the custom modal on all devices below floatWidth resolution.
             nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk'], //
             outputAsCSV: false,           // true to POST data as csv ( false for Html control array ie. default select )
             csvSepChar: ',',              // separation char in csv mode
-            okCancelInMulti: false,       // display ok cancel buttons in desktop mode multiselect also.
-            isClickAwayOk: false,         // for okCancelInMulti=true. sets whether click outside will trigger Ok or Cancel (default is cancel).
+            okCancelInMulti: true,       // display ok cancel buttons in desktop mode multiselect also.
+            isClickAwayOk: true,         // for okCancelInMulti=true. sets whether click outside will trigger Ok or Cancel (default is cancel).
             triggerChangeCombined: true,  // im multi select mode whether to trigger change event on individual selection or combined selection.
             selectAll: false,             // to display select all button in multiselect mode.|| also select all will not be available on mobile devices.
 
             search: false,                // to display input for filtering content. selectAlltext will be input text placeholder
-            searchText: 'Search...',      // placeholder for search input
-            noMatch: 'No matches for "{0}"',
+            searchText: 'Zoek hier',      // placeholder for search input
+            noMatch: 'Geen resultaten voor "{0}"',
             prefix: '',                   // some prefix usually the field name. eg. '<b>Hello</b>'
-            locale: ['OK', 'Cancel', 'Select All'],  // all text that is used. don't change the index.
-            up: false,                    // set true to open upside.
+            locale: ['OK', 'Annuleren', 'Alles selecteren'],  // all text that is used. don't change the index.
             showTitle: true               // set to false to prevent title (tooltip) from appearing
         }, options);
 
@@ -105,7 +104,8 @@
                     O.E.addClass('SumoUnder').attr('tabindex','-1');
 
                     //## Creating the list...
-                    O.optDiv = $('<div class="optWrapper '+ (settings.up?'up':'') +'">');
+					var up = ($(window).height() - O.E.position().top < 180);
+                    O.optDiv = $('<div class="optWrapper '+ (up?'up':'') +'">');
 
                     //branch for floating list in low res devices.
                     O.floatingList();
@@ -768,5 +768,11 @@
         return ret.length == 1 ? ret[0] : ret;
     };
 
-
+	$(function () {
+		$('.js-sumoselect').each(function () {
+			$(this).SumoSelect({
+			    search: $(this).data('search') || false,
+            });
+		});
+	});
 });
