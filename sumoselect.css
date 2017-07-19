@@ -50,7 +50,7 @@
             .SumoSelect > .optWrapper.selall > .options > li.opt:first-child { border-radius:0; }
             .SumoSelect > .optWrapper > .options > li.opt:last-child {border-radius: 0; border-bottom: none;}
             .SumoSelect > .optWrapper.okCancelInMulti > .options > li.opt:last-child {border-radius: 0;}
-            .SumoSelect > .optWrapper > .options li.opt:hover { background-color: #E4E4E4; }
+            .SumoSelect > .optWrapper > .options li.opt:hover { background-color: #f1f1f1; }
             .SumoSelect > .optWrapper > .options li.opt.sel, .SumoSelect .select-all.sel{background-color: #a1c0e4;}
 
             .SumoSelect > .optWrapper > .options li label { text-overflow: ellipsis; white-space: nowrap; overflow: hidden; display: block;cursor: pointer; margin-bottom: 0; }
