@@ -43,7 +43,7 @@
             searchText: 'Zoek hier',      // placeholder for search input
             noMatch: 'Geen resultaten voor "{0}"',
             prefix: '',                   // some prefix usually the field name. eg. '<b>Hello</b>'
-            locale: ['OK', 'Annuleren', 'Alles selecteren'],  // all text that is used. don't change the index.
+            locale: ['Toepassen', 'Annuleren', 'Alles selecteren'],  // all text that is used. don't change the index.
             showTitle: true               // set to false to prevent title (tooltip) from appearing
         }, options);
 
