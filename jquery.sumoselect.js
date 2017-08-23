@@ -564,8 +564,14 @@
                     var O = this;
                     O.E.addClass('SelectClass')//.css('height', O.select.outerHeight());
                     O.mob = true;
-                    O.E.change(function () {
+                    O.E.on('blur', function () {
                         O.setText();
+                        O.E.change();
+                    }).on('change', function (e) {
+                        if (O.E.is(':focus')) {
+                            e.preventDefault();
+                            return false;
+                        }
                     });
                 },
 
