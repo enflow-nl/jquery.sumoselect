@@ -656,7 +656,7 @@
                 // set direct=false/0 bypasses okCancelInMulti behaviour.
                 toggSelAll: function (c, direct) {
                     var O = this;
-                    O.E.find('option:not(:disabled,:hidden)')
+                    O.E.find('option:not(:disabled)')
                     .each(function(ix,e){
                         var is_selected=e.selected,
                             e = $(e).data('li');
