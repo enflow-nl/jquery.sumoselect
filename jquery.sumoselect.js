@@ -321,7 +321,7 @@
                     O.select.addClass('open').attr('aria-expanded', 'true');
                     O.E.trigger('sumo:opened', O);
 
-                    if(O.ftxt)O.ftxt.focus();
+                    if(O.ftxt && !O.isMobile())O.ftxt.focus();
                     else O.select.focus();
 
                     // hide options on click outside.
