@@ -105,3 +105,6 @@
      /*styling for optgroups*/
     .SumoSelect > .optWrapper > .options li.optGroup { padding-left: 5px; text-decoration: underline; }
 
+    /*Create new*/
+    .SumoSelect .createNew { text-decoration: underline; }
+

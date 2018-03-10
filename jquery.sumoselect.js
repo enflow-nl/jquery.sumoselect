@@ -792,10 +792,19 @@
     };
 
 	$(function () {
-		$('.js-sumoselect').each(function () {
-			$(this).SumoSelect({
-			    search: $(this).data('search') || false,
+        $('.js-sumoselect').each(function () {
+            $(this).SumoSelect({
+                search: $(this).data('search') || false,
+                noMatch: $(this).data('allow-user-entry') ? $(this).data('allow-user-entry-text') || "Geen resultaten voor \"{0}\" <a class=\"createNew js-sumoselect-create-new\">Toevoegen</a>" : null
             });
-		});
+        });
+
+        $(document).on("click", ".js-sumoselect-create-new", function () {
+            newopt = $(this).parents(".SumoSelect").find(".search-txt").val();
+            var sumoFind = $(this).parents(".SumoSelect").find("select");
+            sumoFind[0].sumo.add(newopt);
+            sumoFind[0].sumo.reload();
+            sumoFind[0].sumo.selectItem(newopt);
+        });
 	});
 });
