@@ -795,7 +795,7 @@
         $('.js-sumoselect').each(function () {
             $(this).SumoSelect({
                 search: $(this).data('search') || false,
-                noMatch: $(this).data('allow-user-entry') ? $(this).data('allow-user-entry-text') || "Geen resultaten voor \"{0}\" <a class=\"createNew js-sumoselect-create-new\">Toevoegen</a>" : null
+                noMatch: $(this).data('allow-user-entry') ? $(this).data('allow-user-entry-text') || "Geen resultaten voor \"{0}\" <a class=\"createNew js-sumoselect-create-new\" href=''>Toevoegen</a>" : 'Geen resultaten voor "{0}"'
             });
         });
 
