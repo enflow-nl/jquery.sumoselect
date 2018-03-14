@@ -805,6 +805,8 @@
             sumoFind[0].sumo.add(newopt);
             sumoFind[0].sumo.reload();
             sumoFind[0].sumo.selectItem(newopt);
+
+            return false;
         });
 	});
 });
