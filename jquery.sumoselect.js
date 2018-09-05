@@ -828,11 +828,36 @@
     };
 
     $(function () {
-        $('.js-sumoselect').each(function () {
-            $(this).SumoSelect({
+        var translatedOptions = {
+            'en': {
                 search: $(this).data('search') || false,
+                placeholder: 'Make a selection',
+                captionFormat: '{0} selected',
+                captionFormatAllSelected: '{0} all selected!',
+                searchText: 'Search',
+                locale: ['OK', 'Cancel', 'Select All'],
+                noMatch: $(this).data('allow-user-entry') ? $(this).data('allow-user-entry-text') || "No results for \"{0}\" <a class=\"createNew js-sumoselect-create-new\" href=''>Create</a>" : 'No results for "{0}"'
+            },
+            'nl': {
+                search: $(this).data('search') || false,
+                placeholder: 'Maak een selectie',
+                captionFormat: '{0} geselecteerd',
+                captionFormatAllSelected: '{0} alles geselecteerd!',
+                searchText: 'Zoek hier',
+                locale: ['Toepassen', 'Annuleren', 'Alles selecteren'],
                 noMatch: $(this).data('allow-user-entry') ? $(this).data('allow-user-entry-text') || "Geen resultaten voor \"{0}\" <a class=\"createNew js-sumoselect-create-new\" href=''>Toevoegen</a>" : 'Geen resultaten voor "{0}"'
-            });
+            }
+        };
+
+        var language = $('html').attr('lang');
+
+
+        $('.js-sumoselect').each(function () {
+            if (typeof translatedOptions[language] === "undefined") {
+                console.error("Unable to setup sumoselect, language in <html> " + language + " is not defined.");
+            }
+
+            $(this).SumoSelect(translatedOptions[$('html').attr('lang')]);
         });
 
         $(document).on("click", ".js-sumoselect-create-new", function () {
