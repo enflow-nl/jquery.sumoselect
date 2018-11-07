@@ -44,7 +44,8 @@
             noMatch: 'Geen resultaten voor "{0}"',
             prefix: '',                   // some prefix usually the field name. eg. '<b>Hello</b>'
             locale: ['Toepassen', 'Annuleren', 'Alles selecteren'],  // all text that is used. don't change the index.
-            showTitle: true               // set to false to prevent title (tooltip) from appearing
+            showTitle: true,               // set to false to prevent title (tooltip) from appearing
+            selectedFirst: false          // Show on top of list previously selected items
         }, options);
 
         var ret = this.each(function () {
@@ -66,6 +67,7 @@
                 mob: false, // if to open device default select
                 Pstate: [],
                 cooperativeMultitaskingDelegateTimeout: 0, //The value to provide to setTimeout for cooperative multitasking. This ensure that all calls fire in the appropriate sequence.
+                setAllStateDebouncer: null,
 
                 createElems: function () {
                     var O = this;
@@ -133,6 +135,14 @@
 
                 prepItems: function (opts, d) {
                     var lis = [], O = this;
+                    if (settings.selectedFirst) {
+                        opts.sort(function (a, b) {
+                            if (a.selected && !b.selected) return -1;
+                            if (b.selected && !a.selected) return 1;
+                            return 0;
+                        });
+                    }
+
                     $(opts).each(function (i, opt) {       // parsing options to li
                         opt = $(opt);
                         lis.push(opt.is('optgroup') ?
@@ -267,9 +277,8 @@
                     O.selAll = $('<p class="select-all"><span><i></i></span><label>' + settings.locale[2] + '</label></p>');
                     O.optDiv.addClass('selall');
                     O.selAll.on('click', function () {
-                        O.selAll.toggleClass('selected');
-                        O.toggSelAll(O.selAll.hasClass('selected'), 1);
-                        //O.selAllState();
+                        O.selAll.toggleClass('selected', O.selAll.hasClass('partial') ? false : !O.selAll.hasClass('selected'));
+                        O.toggSelAll(O.selAll.hasClass('selected'), true);
                     });
 
                     O.optDiv.prepend(O.selAll);
@@ -309,17 +318,32 @@
 
                 selAllState: function () {
                     var O = this;
-                    if (settings.selectAll && O.is_multi) {
-                        var sc = 0, vc = 0;
-                        O.optDiv.find('li.opt').not('.hidden').each(function (ix, e) {
-                            if ($(e).hasClass('selected')) sc++;
-                            if (!$(e).hasClass('disabled')) vc++;
-                        });
-                        //select all checkbox state change.
-                        if (sc == vc) O.selAll.removeClass('partial').addClass('selected');
-                        else if (sc == 0) O.selAll.removeClass('selected partial');
-                        else O.selAll.addClass('partial')//.removeClass('selected');
+
+                    if (!settings.selectAll || !O.is_multi) return;
+
+                    if (O.setAllStateDebouncer) {
+                        clearTimeout(O.setAllStateDebouncer);
                     }
+
+                    O.setAllStateDebouncer = setTimeout(function () {
+                        var selectedCount = 0,
+                            disabledCount = 0;
+
+                        O.optDiv.find('li.opt').not('.hidden').each(function (ix, e) {
+                            if ($(e).hasClass('selected')) selectedCount++;
+                            if (!$(e).hasClass('disabled')) disabledCount++;
+                        });
+
+                        //select all checkbox state change.
+
+                        if (selectedCount === disabledCount) {
+                            O.selAll.removeClass('partial').addClass('selected');
+                        } else if (selectedCount === 0) {
+                            O.selAll.removeClass('selected partial');
+                        } else {
+                            O.selAll.addClass('partial');
+                        }
+                    }, 50);
                 },
 
                 showOpts: function () {
@@ -836,7 +860,7 @@
             var translatedOptions = {
                 'en': {
                     search: $this.data('search') || false,
-                    placeholder: 'Make a selection',
+                    placeholder: $this.data('placeholder') || 'Make a selection',
                     captionFormat: '{0} selected',
                     captionFormatAllSelected: '{0} all selected!',
                     searchText: 'Search',
@@ -845,7 +869,7 @@
                 },
                 'nl': {
                     search: $this.data('search') || false,
-                    placeholder: 'Maak een selectie',
+                    placeholder: $this.data('placeholder') || 'Maak een selectie',
                     captionFormat: '{0} geselecteerd',
                     captionFormatAllSelected: '{0} alles geselecteerd!',
                     searchText: 'Zoek hier',
