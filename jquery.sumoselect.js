@@ -28,7 +28,7 @@
             placeholder: 'Maak een selectie',   // Dont change it here.
             csvDispCount: 3,              // display no. of items in multiselect. 0 to display all.
             captionFormat: '{0} geselecteerd', // format of caption text. you can set your locale.
-            captionFormatAllSelected: '{0} alles geselecteerd!', // format of caption text when all elements are selected. set null to use captionFormat. It will not work if there are disabled elements in select.
+            captionFormatAllSelected: 'Alles geselecteerd ({0})', // format of caption text when all elements are selected. set null to use captionFormat. It will not work if there are disabled elements in select.
             floatWidth: 400,              // Screen width of device at which the list is rendered in floating popup fashion.
             forceCustomRendering: false,  // force the custom modal on all devices below floatWidth resolution.
             nativeOnDevice: ['Android', 'BlackBerry', 'iPhone', 'iPad', 'iPod', 'Opera Mini', 'IEMobile', 'Silk'], //
@@ -862,7 +862,7 @@
                     search: $this.data('search') || false,
                     placeholder: $this.data('placeholder') || 'Make a selection',
                     captionFormat: '{0} selected',
-                    captionFormatAllSelected: '{0} all selected!',
+                    captionFormatAllSelected: 'All selected ({0})',
                     searchText: 'Search',
                     locale: ['OK', 'Cancel', 'Select All'],
                     noMatch: $this.data('allow-user-entry') ? $this.data('allow-user-entry-text') || "No results for \"{0}\" <a class=\"createNew js-sumoselect-create-new\" href=''>Create</a>" : 'No results for "{0}"'
@@ -871,7 +871,7 @@
                     search: $this.data('search') || false,
                     placeholder: $this.data('placeholder') || 'Maak een selectie',
                     captionFormat: '{0} geselecteerd',
-                    captionFormatAllSelected: '{0} alles geselecteerd!',
+                    captionFormatAllSelected: 'Alles geselecteerd ({0})',
                     searchText: 'Zoek hier',
                     locale: ['Toepassen', 'Annuleren', 'Alles selecteren'],
                     noMatch: $this.data('allow-user-entry') ? $this.data('allow-user-entry-text') || "Geen resultaten voor \"{0}\" <a class=\"createNew js-sumoselect-create-new\" href=''>Toevoegen</a>" : 'Geen resultaten voor "{0}"'
@@ -879,10 +879,11 @@
             };
 
             if (typeof translatedOptions[language] === "undefined") {
-                console.error("Unable to setup sumoselect, language in <html> " + language + " is not defined.");
+                console.error("Unable to setup sumoselect, language in <html> " + language + " is not defined or unknown. Falling back to 'en'.");
+                language = 'en';
             }
 
-            $(this).SumoSelect(translatedOptions[$('html').attr('lang')]);
+            $(this).SumoSelect(translatedOptions[language]);
         });
 
         $(document).on("click", ".js-sumoselect-create-new", function () {
