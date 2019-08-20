@@ -42,10 +42,15 @@
 
         .wrapper {
             display: flex;
+            flex-direction: column;
             width: 500px;
             padding: 40px;
             background: #efefef;
             border-radius: 10px;
+        }
+
+        .wrapper button {
+            margin-top: 1rem;
         }
     </style>
 </head>
@@ -57,6 +62,8 @@
             <option value="<?php echo $i; ?>">Option <?php echo $i; ?></option>
         <?php endfor; ?>
     </select>
+
+    <button>Button</button>
 </div>
 
 </body>
