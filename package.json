@@ -1,6 +1,6 @@
 {
   "name": "enflow-sumoselect",
-  "version": "4.4.1",
+  "version": "4.4.2",
   "description": "A jQuery plugin that progressively enhances an HTML Select Box into a Single/Multiple option dropdown list",
   "main": "jquery.sumoselect.js",
   "scripts": {
