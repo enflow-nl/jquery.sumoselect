@@ -17,12 +17,18 @@
                 forceCustomRendering: true,
                 floatWidth: 0
             });
+
+            $('button').on('click', function () {
+                alert(JSON.stringify($('form').serializeArray()));
+                return false;
+            });
         });
     </script>
     <style type="text/css">
         html {
             height: 100%;
         }
+
         body {
             min-height: 100%;
             font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
@@ -56,15 +62,16 @@
 </head>
 <body>
 
-<div class="wrapper">
+<form class="wrapper">
     <select name="select" class="js-bind-sumoselect" onclick="console.log($(this).val())" multiple onchange="console.log('change is firing')">
-        <?php for ($i = 1; $i <= 1000; $i++): ?>
+        <option disabled>Disabled option</option>
+        <?php for ($i = 1; $i <= 500; $i++): ?>
             <option value="<?php echo $i; ?>">Option <?php echo $i; ?></option>
         <?php endfor; ?>
     </select>
 
     <button>Button</button>
-</div>
+</form>
 
 </body>
 </html>

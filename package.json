@@ -19,10 +19,7 @@
   ],
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/enflow-nl/jquery.sumoselect/issues"
+    "url": "https://github.com/enflow/jquery.sumoselect/issues"
   },
-  "dependencies": {
-    "jquery": ">=1.6"
-  },
-  "homepage": "https://github.com/enflow-nl/jquery.sumoselect#readme"
+  "homepage": "https://github.com/enflow/jquery.sumoselect#readme"
 }
